@@ -10,15 +10,17 @@ from PIL import Image
 detector=cv2.CascadeClassifier('./models/haarcascade_frontalface_default.xml')
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 
-n = 3
+# Chỗ này chỉnh tay nếu chạy trên VSCode (1 là phải chỉnh mode cho phép nhập - 2 là set cứng giá trị n tại đây)
+# n = 1
+n = int(input())
 while n!=1 and n!=2 and n!=3:
     n = int(input("Nhập lại n (1-Thêm thông tin sinh viên / 2-Train lại model / 3-Chạy code nhận diện face"))
 
 if n==1:
-    # id = input('Nhập mã số sinh viên: ')
-    # name = input('Nhập tên sinh viên: ')
-    id = "18520471"
-    name = "To Viet Anh"
+    id = input('Nhập mã số sinh viên: ')
+    name = input('Nhập tên sinh viên: ')
+    # id = "18520471"
+    # name = "To Viet Anh"
     print("Bắt đầu chụp ảnh sinh viên cho đến khi màn hình tắt\n*Nhấn q để thoát ngay lập tức!*")
     insert_update(id, name)
     cam = cv2.VideoCapture(0)
