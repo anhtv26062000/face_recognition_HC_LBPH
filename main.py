@@ -15,10 +15,10 @@ while n!=1 and n!=2 and n!=3:
     n = int(input("Nhập lại n (1-Thêm thông tin sinh viên / 2-Train lại model / 3-Chạy code nhận diện face"))
 
 if n==1:
-    # id = input('Nhập mã số sinh viên: ')
-    # name = input('Nhập tên sinh viên: ')
-    id = "18520471"
-    name = "To Viet Anh"
+    id = input('Nhập mã số sinh viên: ')
+    name = input('Nhập tên sinh viên: ')
+    # id = "18520471"
+    # name = "To Viet Anh"
     print("Bắt đầu chụp ảnh sinh viên cho đến khi màn hình tắt\n*Nhấn q để thoát ngay lập tức!*")
     insert_update(id, name)
     cam = cv2.VideoCapture(0)
@@ -48,13 +48,13 @@ else:
         # Lật ảnh cho đỡ bị ngược
         img = cv2.flip(img, 1)
 
-        # # Vẽ khung chữ nhật để định vị vùng người dùng đưa mặt vào
-        # centerH = img.shape[0] // 2;
-        # centerW = img.shape[1] // 2;
-        # sizeboxW = 300;
-        # sizeboxH = 400;
-        # cv2.rectangle(img, (centerW - sizeboxW // 2, centerH - sizeboxH // 2),
-        #               (centerW + sizeboxW // 2, centerH + sizeboxH // 2), (255, 255, 255), 5)
+        # Vẽ khung chữ nhật để định vị vùng người dùng đưa mặt vào
+        centerH = img.shape[0] // 2;
+        centerW = img.shape[1] // 2;
+        mask = np.zeros_like(img)
+        mask = cv2.ellipse(mask, (centerW, centerH), (90, 150), 0, 0, 360, (255, 255, 255), (-1))
+        img = cv2.bitwise_and(img, mask)
+
 
         gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
         faces=detector.detectMultiScale(gray,1.3,5)

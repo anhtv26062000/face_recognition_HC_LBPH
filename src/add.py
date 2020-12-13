@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 import sqlite3
 
 # Hàm cập nhật tên và ID vào CSDL
@@ -28,12 +29,11 @@ def add_user(id, name, cam, detector):
         img = cv2.flip(img,1)
 
         # Kẻ khung chuẩn để detect
-        centerH = img.shape[0] // 2
-        centerW = img.shape[1] // 2
-        sizeboxW = 300
-        sizeboxH = 400
-        cv2.rectangle(img, (centerW - sizeboxW // 2, centerH - sizeboxH // 2),
-                    (centerW + sizeboxW // 2, centerH + sizeboxH // 2), (255, 255, 255), 5)
+        centerH = img.shape[0] // 2;
+        centerW = img.shape[1] // 2;
+        mask = np.zeros_like(img)
+        mask = cv2.ellipse(mask, (centerW, centerH), (90, 150), 0, 0, 360, (255, 255, 255), (-1))
+        img = cv2.bitwise_and(img, mask)
 
         # Chuyển về ảnh mức xám
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
