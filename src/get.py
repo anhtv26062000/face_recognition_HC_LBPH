@@ -3,6 +3,7 @@ import numpy as np
 import image
 import sqlite3
 from PIL import Image
+from datetime import datetime
 
 def get_data(path, detector):
     # Lấy tất cả các file trong thư mục
@@ -29,3 +30,15 @@ def get_profile(id):
         profile=row
     conn.close()
     return profile
+
+def save_attendance(id_, name):
+    with open("./attendance.csv", "r+") as f:
+        myDatalist = f.readlines()
+        id_list = []
+        for line in myDatalist:
+            entry = line.split(",")
+            id_list.append(entry[0])
+        if id_ not in id_list:
+            now = datetime.now()
+            date = now.strftime("%A %d-%b-%Y %H:%M:%S")
+            f.writelines(f'\n{id_}, {name}, {date}')
